@@ -3,14 +3,8 @@ import React, { createContext, useReducer } from 'react';
 import appReducer from './AppReducer';
 
 const initialState = {
-  movies: [
-    {
-      id: 1,
-      name: "Sammy",
-      location: "DigitalOcean",
-      designation: "Shark"
-    }
-  ]
+  movies: [],
+  currentMovie: null
 };
 
 export const GlobalContext = createContext(initialState);
@@ -18,34 +12,26 @@ export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
-  function addEmployee(employee) {
+  function setMovies(movies) {
     dispatch({
-      type: "ADD_EMPLOYEE",
-      payload: employee
+      type: "SET_MOVIES",
+      payload: movies
     });
   }
 
-  function editEmployee(employee) {
+  function setCurrentMovie(movie) {
     dispatch({
-      type: "EDIT_EMPLOYEE",
-      payload: employee
-    });
-  }
-
-  function removeEmployee(id) {
-    dispatch({
-      type: "REMOVE_EMPLOYEE",
-      payload: id
+      type: "SET_CURRENT_MOVIE",
+      payload: movie
     });
   }
 
   return (
     <GlobalContext.Provider
       value={{
-        employees: state.employees,
-        addEmployee,
-        editEmployee,
-        removeEmployee
+        movies: state?.movies,
+        currentMovie: state?.currentMovie,
+        setMovies, setCurrentMovie
       }}
     >
       {children}
