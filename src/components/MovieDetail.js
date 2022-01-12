@@ -19,7 +19,7 @@ const MovieDetail = () => {
     }, [])
     return (
         <div>
-            <div className='flex max-w-sm w-full bg-white shadow-md rounded-lg overflow-hidden mx-auto mt-16'>
+            <div className='flex max-w-sm w-full bg-white shadow-md rounded-lg overflow-hidden mx-auto mt-12 mb-12'>
                 <div className='w-2 bg-gray-800'></div>
                 <div className="overflow-hidden rounded-xl relative transform transition ease-in-out duration-500 shadow-lg movie-item text-white movie-card" data-movie-id="438631">
                     <div className="absolute inset-0 z-10 transition duration-300 ease-in-out bg-gradient-to-t from-black via-gray-900 to-transparent"></div>

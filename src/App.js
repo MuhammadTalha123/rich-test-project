@@ -9,6 +9,7 @@ import {
   Route
 } from "react-router-dom";
 import { GlobalContext } from './context/GlobalState';
+import MovieCard from './components/MovieCard';
 
 function App() {
   const { setMovies } = useContext(GlobalContext)
@@ -33,7 +34,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* <NavBar /> */}
+      <NavBar />
       <Routes>
         <Route path='/:id' element={<MovieDetail />} />
         <Route exact path="/" element={<Home />} />
