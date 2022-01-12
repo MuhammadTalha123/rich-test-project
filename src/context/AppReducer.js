@@ -3,7 +3,7 @@ export default function appReducer(state, action) {
     case "SET_MOVIES":
       return {
         ...state,
-        movies: [...state?.movies, action.payload]
+        movies: [...state?.movies, ...action.payload]
       };
 
     case "SET_CURRENT_MOVIE":
