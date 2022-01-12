@@ -9,14 +9,16 @@ import {
   Route
 } from "react-router-dom";
 import { GlobalContext } from './context/GlobalState';
+import MovieCard from './components/MovieCard';
 
 function App() {
-  const { movies, setMovies } = useContext(GlobalContext)
+  const { setMovies } = useContext(GlobalContext)
   const moviesFetchLink = 'https://api.themoviedb.org/3/movie/500/similar?api_key=29b93bae8c2da9ca4afabbd1384e3cc0'
   const getAndSetMovies = () => {
     fetch(moviesFetchLink)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data)
         setMovies(data?.results)
       })
       .catch((error) => {
@@ -24,9 +26,6 @@ function App() {
         console.error(error)
       })
   }
-  useEffect(() => {
-    console.log('movies: ', movies)
-  }, [movies])
 
   useEffect(() => {
     getAndSetMovies()
@@ -37,7 +36,7 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Routes>
-        <Route path="/details" element={<MovieDetail />} />
+        <Route path='/:id' element={<MovieDetail />} />
         <Route exact path="/" element={<Home />} />
         <Route path="*" element={() => <h2>404 Not Found</h2>} />
       </Routes>
