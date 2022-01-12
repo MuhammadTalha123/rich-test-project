@@ -5,13 +5,6 @@ export default function appReducer(state, action) {
         ...state,
         movies: [...state?.movies, ...action.payload]
       };
-
-    case "SET_CURRENT_MOVIE":
-      return {
-        ...state,
-        currentMovie: action.payload
-      };
-
     default:
       return state;
   }

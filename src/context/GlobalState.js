@@ -4,7 +4,6 @@ import appReducer from './AppReducer';
 
 const initialState = {
   movies: [],
-  currentMovie: null
 };
 
 export const GlobalContext = createContext(initialState);
@@ -19,19 +18,11 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
-  function setCurrentMovie(movie) {
-    dispatch({
-      type: "SET_CURRENT_MOVIE",
-      payload: movie
-    });
-  }
-
   return (
     <GlobalContext.Provider
       value={{
         movies: state?.movies,
-        currentMovie: state?.currentMovie,
-        setMovies, setCurrentMovie
+        setMovies
       }}
     >
       {children}
