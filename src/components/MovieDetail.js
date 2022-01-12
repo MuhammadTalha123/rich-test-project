@@ -1,15 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { GlobalContext } from '../context/GlobalState'
 
 const MovieDetail = () => {
+    const movieId = parseInt(window.location.pathname?.slice(1))
+
+    const { movies, setMovies } = useContext(GlobalContext)
+
     const [movie, setMovie] = useState(null)
     const [watched, setWatched] = useState(false)
 
     const getIdAndMovie = () => {
-        const movieId = window.location.pathname.slice(1)
         fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=29b93bae8c2da9ca4afabbd1384e3cc0`)
             .then((res) => res.json())
-            .then(data => setMovie(data)).catch((err) => {
+            .then(data => {
+                movies.map((myMovie) => {
+                    if (myMovie?.id === movieId) {
+                        setMovie({ ...data, watched: myMovie?.watched })
+                    } else {
+                        setMovie(data)
+                    }
+                })
+                setMovie(data)
+            }).catch((err) => {
                 alert("Error in fetching movie")
                 console.error(err)
             })
@@ -19,8 +32,24 @@ const MovieDetail = () => {
         getIdAndMovie()
     }, [])
 
-    const handleWatched = (event) => {
+
+    useEffect(() => {
+        movies?.map((myMovie) => {
+            if (myMovie?.id === movieId) {
+                setWatched(myMovie.watched)
+            }
+        })
+    }, [movies])
+
+    const handleWatched = () => {
+        const updatedMovies = movies?.map((myMovie) => {
+            if (myMovie?.id === movieId) {
+                myMovie.watched = !watched
+            }
+            return myMovie
+        })
         setWatched(!watched)
+        setMovies(updatedMovies)
     }
     return (
         <div>
@@ -53,7 +82,7 @@ const MovieDetail = () => {
 
                                 <div>
                                     <div className="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
-                                        <input type="checkbox" onChange={handleWatched} name="toggle" id="toggle" className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" />
+                                        <input type="checkbox" onChange={handleWatched} name="toggle" checked={watched || false} id="toggle" className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" />
                                         <label htmlFor="toggle" className="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
                                     </div>
                                     <label htmlFor="toggle" className="text-xs text-white">Watched</label>

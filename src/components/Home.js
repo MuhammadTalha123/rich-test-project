@@ -7,7 +7,7 @@ function Home() {
 
     return (
         <div className='flex justify-center	align-center flex-wrap'>
-            {movies?.map((movie) => <MovieCard key={movie?.id} movie={movie} />)}
+            {movies?.map((movie) => <MovieCard key={movie?.id + Math.random()} movie={movie} />)}
         </div>
     )
 }
