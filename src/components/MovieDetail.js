@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 const MovieDetail = () => {
     const [movie, setMovie] = useState(null)
+    const [watched, setWatched] = useState(false)
 
     const getIdAndMovie = () => {
         const movieId = window.location.pathname.slice(1)
@@ -17,6 +18,10 @@ const MovieDetail = () => {
     useEffect(() => {
         getIdAndMovie()
     }, [])
+
+    const handleWatched = (event) => {
+        setWatched(!watched)
+    }
     return (
         <div>
             <div className='flex max-w-sm w-full bg-white shadow-md rounded-lg overflow-hidden mx-auto mt-12 mb-12'>
@@ -45,6 +50,14 @@ const MovieDetail = () => {
                                         <div className="text-sm text-gray-400">Runtime:</div>
                                     </div>
                                 </div>
+
+                                <div>
+                                    <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input type="checkbox" onChange={handleWatched} name="toggle" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" />
+                                        <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                                    </div>
+                                    <label for="toggle" class="text-xs text-white">Watched</label>
+                                </div>
                                 <div className="flex flex-col overview">
                                     <div className="flex flex-col"></div>
                                     <div className="text-xs text-gray-400 mb-2">Overview:</div>
@@ -65,6 +78,7 @@ const MovieDetail = () => {
                             <div className="text-sm text-white ml-2">Back</div>
                         </Link>
                     </div>
+
                 </div>
 
             </div>
